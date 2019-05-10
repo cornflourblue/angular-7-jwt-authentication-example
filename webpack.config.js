@@ -1,7 +1,9 @@
-﻿const webpack = require('webpack');
+﻿// @ts-check
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
+/** @type {webpack.Configuration} exports */
 module.exports = {
     entry: './src/main.ts',
     module: {
@@ -34,7 +36,11 @@ module.exports = {
             config: JSON.stringify({
                 apiUrl: 'http://localhost:4000'
             })
-        })
+        }),
+        new webpack.ContextReplacementPlugin(
+            /\@angular(\\|\/)core(\\|\/)fesm5/,
+            path.resolve(__dirname, 'src'),{}
+        )
     ],
     optimization: {
         splitChunks: {
